@@ -1,0 +1,19 @@
+machine:
+  install:
+    image: ${installer_url}
+    diskSelector:
+      size: '> 10GB'
+    wipe: true
+  network:
+    hostname: ${hostname}
+    interfaces:
+      - interface: eth0
+        addresses:
+          - ${ip}/${cidr_prefix}
+        routes:
+          - network: 0.0.0.0/0
+            gateway: ${gateway}
+        mtu: 1500
+    nameservers: ${jsonencode(dns_servers)}
+  nodeLabels:
+    topology.kubernetes.io/region: ${cluster_name}
